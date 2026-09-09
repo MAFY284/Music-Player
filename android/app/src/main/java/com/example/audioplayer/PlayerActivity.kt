@@ -69,6 +69,9 @@ class PlayerActivity : AppCompatActivity() {
         binding.btnRepeat.setOnClickListener { cycleRepeat() }
         binding.btnShuffle.setOnClickListener { toggleShuffle() }
         binding.btnFavorite.setOnClickListener { toggleFavorite() }
+        binding.btnAddToPlaylist.setOnClickListener {
+            PlayerManager.currentSongUri()?.let { PlaylistDialogs.showAddToPlaylist(this, it) }
+        }
         binding.btnLyrics.setOnClickListener { showLyrics() }
         binding.btnQueue.setOnClickListener { showQueue() }
 

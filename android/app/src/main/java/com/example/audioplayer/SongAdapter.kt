@@ -13,6 +13,7 @@ class SongAdapter(
     private val onPlay: (Song, Int) -> Unit,
     private val onFavorite: (Song) -> Unit,
     private val onLongClick: (Song) -> Unit,
+    private val onAddToPlaylist: (Song) -> Unit,
 ) : RecyclerView.Adapter<SongAdapter.VH>() {
 
     private var songs: List<Song> = emptyList()
@@ -30,6 +31,7 @@ class SongAdapter(
         val subtitle: TextView = view.findViewById(R.id.tvSubtitle)
         val duration: TextView = view.findViewById(R.id.tvDuration)
         val fav: ImageView = view.findViewById(R.id.ivFav)
+        val addPlaylist: ImageView = view.findViewById(R.id.ivAddPlaylist)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -54,6 +56,7 @@ class SongAdapter(
         )
 
         holder.fav.setOnClickListener { onFavorite(song) }
+        holder.addPlaylist.setOnClickListener { onAddToPlaylist(song) }
         holder.itemView.setOnClickListener { onPlay(song, position) }
         holder.itemView.setOnLongClickListener {
             onLongClick(song)

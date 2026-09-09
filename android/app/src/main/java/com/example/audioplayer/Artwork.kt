@@ -81,6 +81,7 @@ object Artwork {
             return
         }
         view.tag = uri
+        view.setImageDrawable(null)
         thread {
             val bmp = decodeUri(context, uri, 1200) ?: return@thread
             mainHandler.post { if (view.tag == uri) view.setImageBitmap(bmp) }

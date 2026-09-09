@@ -71,6 +71,16 @@
         android:textSize="12sp" />
 
     <ImageView
+        android:id="@+id/ivAddPlaylist"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/add_to_playlist"
+        android:padding="8dp"
+        android:src="@drawable/ic_playlist_add"
+        app:tint="@color/chrome_dark" />
+
+    <ImageView
         android:id="@+id/ivFav"
         android:layout_width="40dp"
         android:layout_height="40dp"

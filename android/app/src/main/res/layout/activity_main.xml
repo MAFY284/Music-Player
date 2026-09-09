@@ -368,7 +368,7 @@
 
             <TextView
                 android:id="@+id/tvNavRec"
-                android:layout_width="24dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="@string/section_recents"

@@ -35,6 +35,16 @@
             android:textStyle="bold" />
 
         <ImageView
+            android:id="@+id/btnAddToPlaylist"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/add_to_playlist"
+            android:padding="12dp"
+            android:src="@drawable/ic_playlist_add"
+            app:tint="@color/chrome" />
+
+        <ImageView
             android:id="@+id/btnFavorite"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -58,14 +68,28 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <ImageView
-                android:id="@+id/ivCover"
+            <FrameLayout
                 android:layout_width="280dp"
                 android:layout_height="280dp"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/thumb_bg"
-                android:contentDescription="@null"
-                android:scaleType="centerCrop" />
+                android:background="@drawable/thumb_bg">
+
+                <ImageView
+                    android:id="@+id/ivCoverPlaceholder"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_music"
+                    app:tint="@color/chrome_dark" />
+
+                <ImageView
+                    android:id="@+id/ivCover"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@null"
+                    android:scaleType="centerCrop" />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/tvTitle"

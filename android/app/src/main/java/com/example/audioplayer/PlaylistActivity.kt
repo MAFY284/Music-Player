@@ -54,6 +54,7 @@ class PlaylistActivity : AppCompatActivity() {
             onPlay = { _, index -> playFrom(index) },
             onFavorite = { song -> toggleFavorite(song) },
             onLongClick = { song -> showSongMenu(song) },
+            onAddToPlaylist = { song -> PlaylistDialogs.showAddToPlaylist(this, song.uri) },
         )
         binding.recyclerSongs.layoutManager = LinearLayoutManager(this)
         binding.recyclerSongs.adapter = adapter

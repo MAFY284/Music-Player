@@ -46,8 +46,8 @@ class MainActivity : AppCompatActivity() {
     private var section = Section.SONGS
     private var query = ""
     private var pendingCoverPlaylistId: String? = null
-    private var sortField = SortField.NAME
-    private var sortAscending = true
+    private var sortField = SortField.DATE
+    private var sortAscending = false
 
     @Volatile
     private var ready = false
@@ -98,6 +98,7 @@ class MainActivity : AppCompatActivity() {
             onPlay = { song, index -> playFrom(currentList, index) },
             onFavorite = { song -> toggleFavorite(song) },
             onLongClick = { song -> showSongMenu(song) },
+            onAddToPlaylist = { song -> PlaylistDialogs.showAddToPlaylist(this, song.uri) },
         )
         playlistAdapter = PlaylistAdapter(
             this,
@@ -298,7 +299,7 @@ class MainActivity : AppCompatActivity() {
                 binding.recyclerPlaylists.visibility = View.GONE
                 currentList = when (section) {
                     Section.FAVORITES -> sortSongs(filterSongs(resolve(MusicStore.favoriteUris())))
-                    Section.RECENTS -> sortSongs(filterSongs(resolve(MusicStore.recentUris())))
+                    Section.RECENTS -> filterSongs(resolve(MusicStore.recentUris()))
                     else -> sortSongs(filterSongs(allSongs))
                 }
                 songAdapter.submit(currentList)
@@ -392,35 +393,7 @@ class MainActivity : AppCompatActivity() {
             .setItems(items) { _, which ->
                 when (which) {
                     0 -> toggleFavorite(song)
-                    1 -> showAddToPlaylist(song)
-                }
-            }
-            .show()
-    }
-
-    private fun showAddToPlaylist(song: Song) {
-        val pls = MusicStore.playlists()
-        if (pls.isEmpty()) {
-            createPlaylistDialog { p ->
-                MusicStore.addToPlaylist(p.id, song.uri)
-                toast(getString(R.string.added_to_playlist))
-            }
-            return
-        }
-        val names = pls.map { it.name }.toTypedArray()
-        MaterialAlertDialogBuilder(this, R.style.App_Dialog)
-            .setTitle(R.string.add_to_playlist)
-            .setItems(names) { _, which ->
-                val ok = MusicStore.addToPlaylist(pls[which].id, song.uri)
-                toast(
-                    if (ok) getString(R.string.added_to_playlist)
-                    else getString(R.string.already_in_playlist),
-                )
-            }
-            .setNeutralButton(R.string.new_playlist) { _, _ ->
-                createPlaylistDialog { p ->
-                    MusicStore.addToPlaylist(p.id, song.uri)
-                    toast(getString(R.string.added_to_playlist))
+                    1 -> PlaylistDialogs.showAddToPlaylist(this, song.uri)
                 }
             }
             .show()
@@ -445,26 +418,6 @@ class MainActivity : AppCompatActivity() {
                     2 -> confirmDeletePlaylist(p)
                 }
             }
-            .show()
-    }
-
-    private fun createPlaylistDialog(onCreated: ((Playlist) -> Unit)? = null) {
-        val input = EditText(this).apply {
-            hint = getString(R.string.playlist_name_hint)
-            setTextColor(getColor(R.color.text_primary))
-            setHintTextColor(getColor(R.color.text_secondary))
-            setPadding(dp(20), dp(16), dp(20), dp(16))
-        }
-        MaterialAlertDialogBuilder(this, R.style.App_Dialog)
-            .setTitle(R.string.new_playlist)
-            .setView(input)
-            .setPositiveButton(R.string.ok) { _, _ ->
-                val name = input.text.toString().trim().ifEmpty { getString(R.string.new_playlist) }
-                val p = MusicStore.createPlaylist(name)
-                if (section == Section.PLAYLISTS) applyFilter()
-                onCreated?.invoke(p)
-            }
-            .setNegativeButton(R.string.cancel, null)
             .show()
     }
 
