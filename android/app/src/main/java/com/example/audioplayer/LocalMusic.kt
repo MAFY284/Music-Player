@@ -80,6 +80,12 @@ object LocalMusic {
         "mp3", "wav", "flac", "m4a", "m4b", "opus", "ogg", "aac", "wma", "amr",
     )
 
+    fun scanAll(context: Context): List<Song> {
+        val media = scan(context)
+        val sources = scanSources(context, MusicStore.sourceFolders())
+        return (media + sources).distinctBy { it.uri }
+    }
+
     fun scanSources(context: Context, folders: List<SourceFolder>): List<Song> {
         val songs = mutableListOf<Song>()
         folders.forEach { folder ->

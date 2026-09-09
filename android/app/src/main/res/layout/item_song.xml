@@ -18,6 +18,7 @@
         android:background="@android:color/transparent" />
 
     <FrameLayout
+        android:id="@+id/artFrame"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="12dp"
@@ -38,6 +39,18 @@
             android:contentDescription="@null"
             android:src="@drawable/ic_music"
             app:tint="@color/chrome_dark" />
+
+        <ImageView
+            android:id="@+id/ivPlayState"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="3dp"
+            android:background="@drawable/bg_play_state"
+            android:contentDescription="@null"
+            android:padding="4dp"
+            android:src="@drawable/ic_play"
+            app:tint="@color/white" />
     </FrameLayout>
 
     <LinearLayout
@@ -94,5 +107,16 @@
         android:contentDescription="@string/section_favorites"
         android:padding="8dp"
         android:src="@drawable/ic_heart"
+        app:tint="@color/chrome_dark" />
+
+    <ImageView
+        android:id="@+id/ivDrag"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/reorder"
+        android:padding="8dp"
+        android:src="@drawable/ic_drag_handle"
+        android:visibility="gone"
         app:tint="@color/chrome_dark" />
 </LinearLayout>

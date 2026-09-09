@@ -87,15 +87,21 @@ class MainActivity : AppCompatActivity() {
     private var downloadDialog: DownloadDialog? = null
 
     private val playerListener = object : Player.Listener {
-        override fun onIsPlayingChanged(isPlaying: Boolean) = updateMiniPlayIcon()
+        override fun onIsPlayingChanged(isPlaying: Boolean) {
+            songAdapter.setPlaying(isPlaying)
+            updateMiniPlayIcon()
+        }
+
         override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) = updateMiniPlayer()
+
         override fun onPlaybackStateChanged(playbackState: Int) = updateMiniPlayer()
     }
 
     init {
         songAdapter = SongAdapter(
             this,
-            onPlay = { song, index -> playFrom(currentList, index) },
+            onOpenPlayer = { song, index -> openPlayer(song, index) },
+            onTogglePlay = { song, index -> togglePlay(song, index) },
             onFavorite = { song -> toggleFavorite(song) },
             onLongClick = { song -> showSongMenu(song) },
             onAddToPlaylist = { song -> PlaylistDialogs.showAddToPlaylist(this, song.uri) },
@@ -212,9 +218,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
         thread {
-            val media = LocalMusic.scan(this)
-            val sources = LocalMusic.scanSources(this, MusicStore.sourceFolders())
-            val songs = (media + sources).distinctBy { it.uri }
+            val songs = LocalMusic.scanAll(this)
             mainHandler.post {
                 allSongs = songs
                 songUriMap = songs.associateBy { it.uri }
@@ -371,9 +375,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun resolve(uris: List<String>): List<Song> = uris.mapNotNull { songUriMap[it] }
 
-    private fun playFrom(songs: List<Song>, index: Int) {
-        if (songs.isEmpty()) return
-        PlayerManager.playQueue(songs, index)
+    private fun openPlayer(song: Song, index: Int) {
+        if (PlayerManager.currentSongUri() != song.uri) {
+            PlayerManager.playQueue(currentList, index)
+        }
+        startActivity(Intent(this, PlayerActivity::class.java))
+    }
+
+    private fun togglePlay(song: Song, index: Int) {
+        if (PlayerManager.currentSongUri() == song.uri) {
+            PlayerManager.togglePlayPause()
+        } else {
+            PlayerManager.playQueue(currentList, index)
+        }
     }
 
     private fun toggleFavorite(song: Song) {

@@ -5,20 +5,30 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class SongAdapter(
     private val context: android.content.Context,
-    private val onPlay: (Song, Int) -> Unit,
+    private val onOpenPlayer: (Song, Int) -> Unit,
+    private val onTogglePlay: (Song, Int) -> Unit,
     private val onFavorite: (Song) -> Unit,
     private val onLongClick: (Song) -> Unit,
     private val onAddToPlaylist: (Song) -> Unit,
+    private val onStartDrag: ((RecyclerView.ViewHolder) -> Unit)? = null,
 ) : RecyclerView.Adapter<SongAdapter.VH>() {
 
     private var songs: List<Song> = emptyList()
     private var currentUri: String? = null
+    private var isPlaying: Boolean = false
+
+    var dragEnabled: Boolean = false
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     fun submit(list: List<Song>) {
         songs = list
@@ -30,16 +40,33 @@ class SongAdapter(
         notifyDataSetChanged()
     }
 
+    fun setPlaying(playing: Boolean) {
+        isPlaying = playing
+        notifyDataSetChanged()
+    }
+
+    fun move(from: Int, to: Int) {
+        if (from < 0 || from >= songs.size || to < 0 || to >= songs.size) return
+        val list = songs.toMutableList()
+        val item = list.removeAt(from)
+        list.add(to, item)
+        songs = list
+        notifyItemMoved(from, to)
+    }
+
     fun songs(): List<Song> = songs
 
     class VH(view: View) : RecyclerView.ViewHolder(view) {
         val accentBar: View = view.findViewById(R.id.accentBar)
+        val artFrame: FrameLayout = view.findViewById(R.id.artFrame)
         val art: ImageView = view.findViewById(R.id.ivArt)
+        val playState: ImageView = view.findViewById(R.id.ivPlayState)
         val title: TextView = view.findViewById(R.id.tvTitle)
         val subtitle: TextView = view.findViewById(R.id.tvSubtitle)
         val duration: TextView = view.findViewById(R.id.tvDuration)
         val fav: ImageView = view.findViewById(R.id.ivFav)
         val addPlaylist: ImageView = view.findViewById(R.id.ivAddPlaylist)
+        val drag: ImageView = view.findViewById(R.id.ivDrag)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -57,13 +84,33 @@ class SongAdapter(
         holder.subtitle.text = song.artist.ifBlank { context.getString(R.string.unknown_artist) }
         holder.duration.text = if (song.durationMs > 0) formatDuration(song.durationMs) else ""
 
-        val titleColor = if (isCurrent) R.color.orange else R.color.text_primary
-        val subtitleColor = if (isCurrent) R.color.orange_light else R.color.text_secondary
-        holder.title.setTextColor(context.getColor(titleColor))
-        holder.subtitle.setTextColor(context.getColor(subtitleColor))
+        holder.title.setTextColor(
+            context.getColor(if (isCurrent) R.color.orange else R.color.text_primary),
+        )
+        holder.subtitle.setTextColor(
+            context.getColor(if (isCurrent) R.color.orange_light else R.color.text_secondary),
+        )
         holder.accentBar.setBackgroundColor(
             if (isCurrent) context.getColor(R.color.orange) else Color.TRANSPARENT,
         )
+
+        val showingPause = isCurrent && isPlaying
+        holder.playState.setImageResource(
+            if (showingPause) R.drawable.ic_pause else R.drawable.ic_play,
+        )
+        holder.playState.imageTintList = ColorStateList.valueOf(
+            context.getColor(if (isCurrent) R.color.orange else R.color.white),
+        )
+
+        holder.drag.visibility = if (dragEnabled) View.VISIBLE else View.GONE
+        if (dragEnabled && onStartDrag != null) {
+            holder.drag.setOnTouchListener { _, e ->
+                if (e.actionMasked == android.view.MotionEvent.ACTION_DOWN) onStartDrag(holder)
+                false
+            }
+        } else {
+            holder.drag.setOnTouchListener(null)
+        }
 
         Artwork.loadAlbumArt(context, holder.art, song.albumId)
 
@@ -73,9 +120,10 @@ class SongAdapter(
             context.getColor(if (isFav) R.color.orange else R.color.chrome_dark),
         )
 
+        holder.artFrame.setOnClickListener { onTogglePlay(song, position) }
         holder.fav.setOnClickListener { onFavorite(song) }
         holder.addPlaylist.setOnClickListener { onAddToPlaylist(song) }
-        holder.itemView.setOnClickListener { onPlay(song, position) }
+        holder.itemView.setOnClickListener { onOpenPlayer(song, position) }
         holder.itemView.setOnLongClickListener {
             onLongClick(song)
             true

@@ -28,6 +28,8 @@ Reproductor de música para Android **centrado en archivos locales**, con descar
 - **Ordenar** por nombre, fecha, tamaño o duración (ascendente / descendente).
 - Icono de **carpeta** junto a "Mi música" para añadir carpetas del móvil como fuente de música.
 - **Añadir a playlist** desde cualquier canción (lista las creadas o crea una nueva) y **quitar canciones** de una playlist.
+- **Reordenar canciones** arrastrando el icono de la playlist.
+- **Mini-reproductor** con barra de progreso dentro de la playlist; toca una canción para abrir el reproductor completo o su icono para pausar/reanudar.
 - La canción **en reproducción se resalta** en naranja (barra lateral + título).
 
 ### Descarga
