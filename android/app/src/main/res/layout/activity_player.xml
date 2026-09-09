@@ -91,6 +91,43 @@
                 android:textColor="@color/text_secondary"
                 android:textSize="14sp" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLyrics"
+                    style="@style/Widget.App.ButtonChrome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="0dp"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"
+                    android:text="@string/lyrics"
+                    app:icon="@drawable/ic_lyrics"
+                    app:iconGravity="textStart"
+                    app:iconPadding="6dp"
+                    app:iconSize="18dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnQueue"
+                    style="@style/Widget.App.ButtonChrome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:minWidth="0dp"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"
+                    android:text="@string/queue"
+                    app:icon="@drawable/ic_queue_music"
+                    app:iconGravity="textStart"
+                    app:iconPadding="6dp"
+                    app:iconSize="18dp" />
+            </LinearLayout>
+
             <SeekBar
                 android:id="@+id/sbProgress"
                 android:layout_width="match_parent"
@@ -139,7 +176,7 @@
                     android:layout_height="48dp"
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/repeat_off"
+                    android:contentDescription="@string/rewind"
                     android:padding="10dp"
                     android:src="@drawable/ic_fast_rewind"
                     app:tint="@color/chrome" />
@@ -150,7 +187,7 @@
                     android:layout_height="48dp"
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/repeat_off"
+                    android:contentDescription="@string/previous"
                     android:padding="10dp"
                     android:src="@drawable/ic_previous"
                     app:tint="@color/chrome" />
@@ -183,7 +220,7 @@
                     android:layout_height="48dp"
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/repeat_off"
+                    android:contentDescription="@string/next"
                     android:padding="10dp"
                     android:src="@drawable/ic_next"
                     app:tint="@color/chrome" />
@@ -194,7 +231,7 @@
                     android:layout_height="48dp"
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/repeat_off"
+                    android:contentDescription="@string/forward"
                     android:padding="10dp"
                     android:src="@drawable/ic_fast_forward"
                     app:tint="@color/chrome" />

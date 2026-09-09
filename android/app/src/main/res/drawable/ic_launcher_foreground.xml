@@ -5,12 +5,12 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
     <group
-        android:pivotX="54"
-        android:pivotY="54"
-        android:scaleX="0.72"
-        android:scaleY="0.72">
+        android:translateX="11.1"
+        android:translateY="14.4"
+        android:scaleX="3.3"
+        android:scaleY="3.3">
         <path
             android:fillColor="#FFFFFFFF"
-            android:pathData="M40,32 L40,66 C40,69 38,72 34,72 C29,72 26,68 26,64 C26,60 29,56 34,56 C36,56 38,56.5 40,57.5 L40,44 L72,40 L72,58 C72,61 70,64 66,64 C61,64 58,60 58,56 C58,52 61,48 66,48 C68,48 70,48.5 72,49.5 L72,36 L40,32 Z" />
+            android:pathData="M12,3v10.55c-0.59,-0.34 -1.27,-0.55 -2,-0.55 -2.21,0 -4,1.79 -4,4s1.79,4 4,4 4,-1.79 4,-4V7h4V3h-6z" />
     </group>
 </vector>

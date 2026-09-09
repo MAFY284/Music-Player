@@ -18,6 +18,7 @@ object MusicStore {
     private val sourceFolders = mutableListOf<SourceFolder>()
     private var downloadUri: String? = null
     private var downloadName: String = ""
+    private val lyrics = mutableMapOf<String, String>()
 
     @Volatile
     private var initialized = false
@@ -52,6 +53,14 @@ object MusicStore {
     fun downloadDisplayName(): String =
         if (downloadUri == null) appContext.getString(R.string.dl_location_default)
         else downloadName.ifBlank { appContext.getString(R.string.dl_location_default) }
+
+    fun getLyrics(songUri: String): String = lyrics[songUri] ?: ""
+
+    fun setLyrics(songUri: String, text: String) {
+        val trimmed = text.trim()
+        if (trimmed.isEmpty()) lyrics.remove(songUri) else lyrics[songUri] = trimmed
+        save()
+    }
 
     fun setDownloadLocation(uri: String?, name: String) {
         downloadUri = uri
@@ -176,6 +185,15 @@ object MusicStore {
             }
             downloadUri = obj.optString("downloadUri").ifBlank { null }
             downloadName = obj.optString("downloadName")
+
+            val lyrObj = obj.optJSONObject("lyrics")
+            if (lyrObj != null) {
+                val keys = lyrObj.keys()
+                while (keys.hasNext()) {
+                    val k = keys.next()
+                    lyrics[k] = lyrObj.optString(k)
+                }
+            }
         } catch (_: Exception) {
         }
     }
@@ -204,6 +222,8 @@ object MusicStore {
             sourceFolders.forEach {
                 srcArr.put(JSONObject().put("uri", it.uri).put("name", it.name))
             }
+            val lyrObj = JSONObject()
+            lyrics.forEach { (k, v) -> lyrObj.put(k, v) }
 
             root.put("playlists", plArr)
             root.put("favorites", favArr)
@@ -211,6 +231,7 @@ object MusicStore {
             root.put("sources", srcArr)
             root.put("downloadUri", downloadUri ?: "")
             root.put("downloadName", downloadName)
+            root.put("lyrics", lyrObj)
             File(appContext.filesDir, INDEX_FILE).writeText(root.toString())
         } catch (_: Exception) {
         }

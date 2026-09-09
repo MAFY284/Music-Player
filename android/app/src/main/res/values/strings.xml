@@ -51,6 +51,29 @@
     <string name="shuffle_on">Aleatorio activado</string>
     <string name="shuffle_off">Aleatorio desactivado</string>
     <string name="no_track">Nada en reproducción</string>
+    <string name="next">Siguiente</string>
+    <string name="previous">Anterior</string>
+    <string name="rewind">Retroceder 10 segundos</string>
+    <string name="forward">Adelantar 10 segundos</string>
+    <string name="lyrics">Letras</string>
+    <string name="lyrics_hint">Escribe o pega la letra de la canción…</string>
+    <string name="queue">Cola</string>
+    <string name="current_queue">Cola de reproducción</string>
+
+    <!-- Orden -->
+    <string name="sort">Ordenar</string>
+    <string name="sort_name">Nombre</string>
+    <string name="sort_date">Fecha</string>
+    <string name="sort_size">Tamaño</string>
+    <string name="sort_duration">Duración</string>
+    <string name="sort_name_asc">Nombre (A-Z)</string>
+    <string name="sort_name_desc">Nombre (Z-A)</string>
+    <string name="sort_date_asc">Fecha (antiguas)</string>
+    <string name="sort_date_desc">Fecha (nuevas)</string>
+    <string name="sort_size_asc">Tamaño (menor)</string>
+    <string name="sort_size_desc">Tamaño (mayor)</string>
+    <string name="sort_duration_asc">Duración (corta)</string>
+    <string name="sort_duration_desc">Duración (larga)</string>
 
     <!-- Descarga -->
     <string name="dl_title">Descargar audio</string>

@@ -76,8 +76,9 @@
 
         <EditText
             android:id="@+id/etSearch"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@drawable/bg_input"
             android:drawableStart="@drawable/ic_search"
             android:drawablePadding="10dp"
@@ -90,6 +91,17 @@
             android:textColor="@color/text_primary"
             android:textColorHint="@color/text_secondary"
             android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/btnSort"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/sort"
+            android:padding="11dp"
+            android:src="@drawable/ic_sort"
+            app:tint="@color/chrome" />
     </LinearLayout>
 
     <!-- Encabezado de sección -->
@@ -239,7 +251,7 @@
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/repeat_off"
+                android:contentDescription="@string/previous"
                 android:padding="10dp"
                 android:src="@drawable/ic_previous"
                 app:tint="@color/chrome" />
@@ -259,7 +271,7 @@
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/repeat_off"
+                android:contentDescription="@string/next"
                 android:padding="10dp"
                 android:src="@drawable/ic_next"
                 app:tint="@color/chrome" />

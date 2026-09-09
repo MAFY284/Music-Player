@@ -38,6 +38,7 @@ object LocalMusic {
             MediaStore.Audio.Media.DURATION,
             MediaStore.Audio.Media.ALBUM_ID,
             MediaStore.Audio.Media.DATE_ADDED,
+            MediaStore.Audio.Media.SIZE,
         )
         val selection =
             "(${MediaStore.Audio.Media.IS_MUSIC} != 0 OR ${MediaStore.Audio.Media.IS_MUSIC} IS NULL)"
@@ -55,6 +56,7 @@ object LocalMusic {
                 val duration = it.getLong(4)
                 val albumId = it.getLong(5)
                 val dateAdded = it.getLong(6)
+                val size = it.getLong(7)
                 val uri = ContentUris.withAppendedId(collection, id)
                 songs.add(
                     Song(
@@ -66,6 +68,7 @@ object LocalMusic {
                         uri = uri.toString(),
                         albumId = albumId,
                         dateAddedSec = dateAdded,
+                        sizeBytes = size,
                     ),
                 )
             }

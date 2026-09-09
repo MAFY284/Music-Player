@@ -13,6 +13,7 @@ data class Song(
     val uri: String,
     val albumId: Long = -1L,
     val dateAddedSec: Long = 0L,
+    val sizeBytes: Long = 0L,
 ) {
     fun toUri(): Uri = Uri.parse(uri)
 

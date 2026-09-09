@@ -37,28 +37,30 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
-    private val gestureDetector = GestureDetector(
-        this,
-        object : GestureDetector.SimpleOnGestureListener() {
-            override fun onFling(
-                e1: MotionEvent?,
-                e2: MotionEvent,
-                velocityX: Float,
-                velocityY: Float,
-            ): Boolean {
-                if (abs(velocityX) < 2000 || abs(velocityX) < abs(velocityY)) return false
-                if (velocityX < 0) PlayerManager.next() else PlayerManager.previous()
-                return true
-            }
-        },
-    )
+    private lateinit var gestureDetector: GestureDetector
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnBack.setOnClickListener { finish() }
+        gestureDetector = GestureDetector(
+            this,
+            object : GestureDetector.SimpleOnGestureListener() {
+                override fun onFling(
+                    e1: MotionEvent?,
+                    e2: MotionEvent,
+                    velocityX: Float,
+                    velocityY: Float,
+                ): Boolean {
+                    if (abs(velocityX) < 2000 || abs(velocityX) < abs(velocityY)) return false
+                    if (velocityX < 0) PlayerManager.next() else PlayerManager.previous()
+                    return true
+                }
+            },
+        )
+
+        binding.btnBack.setOnClickListener { finishWithCollapse() }
         binding.btnPlayPause.setOnClickListener { PlayerManager.togglePlayPause() }
         binding.btnNext.setOnClickListener { PlayerManager.next() }
         binding.btnPrev.setOnClickListener { PlayerManager.previous() }
@@ -67,6 +69,8 @@ class PlayerActivity : AppCompatActivity() {
         binding.btnRepeat.setOnClickListener { cycleRepeat() }
         binding.btnShuffle.setOnClickListener { toggleShuffle() }
         binding.btnFavorite.setOnClickListener { toggleFavorite() }
+        binding.btnLyrics.setOnClickListener { showLyrics() }
+        binding.btnQueue.setOnClickListener { showQueue() }
 
         binding.ivCover.setOnTouchListener { _, e ->
             gestureDetector.onTouchEvent(e)
@@ -196,6 +200,52 @@ class PlayerActivity : AppCompatActivity() {
         val on = PlayerManager.controller()?.shuffleModeEnabled == true
         toast(if (on) getString(R.string.shuffle_on) else getString(R.string.shuffle_off))
         updateShuffleIcon()
+    }
+
+    private fun showLyrics() {
+        val uri = PlayerManager.currentSongUri() ?: return
+        val title = PlayerManager.currentTitle() ?: getString(R.string.no_track)
+        val input = android.widget.EditText(this).apply {
+            setText(MusicStore.getLyrics(uri))
+            hint = getString(R.string.lyrics_hint)
+            gravity = android.view.Gravity.TOP or android.view.Gravity.START
+            inputType =
+                android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE
+            minLines = 8
+            setTextColor(getColor(R.color.text_primary))
+            setHintTextColor(getColor(R.color.text_secondary))
+            setPadding(dp(20), dp(16), dp(20), dp(16))
+        }
+        com.google.android.material.dialog.MaterialAlertDialogBuilder(this, R.style.App_Dialog)
+            .setTitle("${getString(R.string.lyrics)} · $title")
+            .setView(input)
+            .setPositiveButton(R.string.ok) { _, _ -> MusicStore.setLyrics(uri, input.text.toString()) }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
+    private fun showQueue() {
+        val c = PlayerManager.controller() ?: return
+        val count = c.mediaItemCount
+        if (count == 0) return
+        val current = c.currentMediaItemIndex
+        val items = (0 until count).map { i ->
+            val title = c.getMediaItemAt(i).mediaMetadata.title?.toString() ?: "—"
+            if (i == current) "▶ $title" else title
+        }.toTypedArray()
+        com.google.android.material.dialog.MaterialAlertDialogBuilder(this, R.style.App_Dialog)
+            .setTitle(getString(R.string.current_queue))
+            .setItems(items) { _, which -> c.seekTo(which, 0) }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
+    private fun dp(value: Int): Int =
+        (value * resources.displayMetrics.density).toInt()
+
+    private fun finishWithCollapse() {
+        finish()
+        overridePendingTransition(0, R.anim.slide_down_out)
     }
 
     private fun toast(message: String) {

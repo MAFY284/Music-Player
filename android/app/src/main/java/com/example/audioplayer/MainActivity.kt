@@ -13,6 +13,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -31,6 +32,8 @@ class MainActivity : AppCompatActivity() {
 
     private enum class Section { SONGS, FAVORITES, PLAYLISTS, RECENTS }
 
+    private enum class SortField { NAME, DATE, SIZE, DURATION }
+
     private lateinit var binding: ActivityMainBinding
     private val mainHandler = Handler(Looper.getMainLooper())
 
@@ -43,6 +46,8 @@ class MainActivity : AppCompatActivity() {
     private var section = Section.SONGS
     private var query = ""
     private var pendingCoverPlaylistId: String? = null
+    private var sortField = SortField.NAME
+    private var sortAscending = true
 
     @Volatile
     private var ready = false
@@ -128,6 +133,7 @@ class MainActivity : AppCompatActivity() {
         binding.navRecents.setOnClickListener { setSection(Section.RECENTS) }
         binding.btnBack.setOnClickListener { setSection(Section.SONGS) }
         binding.btnAddFolder.setOnClickListener { pickSourceFolderLauncher.launch(null) }
+        binding.btnSort.setOnClickListener { showSortMenu(it) }
 
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -146,6 +152,7 @@ class MainActivity : AppCompatActivity() {
         binding.miniPrev.setOnClickListener { PlayerManager.previous() }
         binding.miniPlayer.setOnClickListener {
             startActivity(Intent(this, PlayerActivity::class.java))
+            overridePendingTransition(R.anim.slide_up_in, 0)
         }
 
         requestNotificationPermission()
@@ -290,9 +297,9 @@ class MainActivity : AppCompatActivity() {
                 binding.recyclerSongs.visibility = View.VISIBLE
                 binding.recyclerPlaylists.visibility = View.GONE
                 currentList = when (section) {
-                    Section.FAVORITES -> filterSongs(resolve(MusicStore.favoriteUris()))
-                    Section.RECENTS -> filterSongs(resolve(MusicStore.recentUris()))
-                    else -> filterSongs(allSongs)
+                    Section.FAVORITES -> sortSongs(filterSongs(resolve(MusicStore.favoriteUris())))
+                    Section.RECENTS -> sortSongs(filterSongs(resolve(MusicStore.recentUris())))
+                    else -> sortSongs(filterSongs(allSongs))
                 }
                 songAdapter.submit(currentList)
                 val empty = currentList.isEmpty()
@@ -323,6 +330,43 @@ class MainActivity : AppCompatActivity() {
                 it.artist.contains(query, ignoreCase = true) ||
                 it.album.contains(query, ignoreCase = true)
         }
+
+    private fun sortSongs(songs: List<Song>): List<Song> {
+        val sorted = when (sortField) {
+            SortField.NAME -> songs.sortedBy { it.title.lowercase() }
+            SortField.DATE -> songs.sortedBy { it.dateAddedSec }
+            SortField.SIZE -> songs.sortedBy { it.sizeBytes }
+            SortField.DURATION -> songs.sortedBy { it.durationMs }
+        }
+        return if (sortAscending) sorted else sorted.reversed()
+    }
+
+    private fun showSortMenu(anchor: View) {
+        val menu = PopupMenu(this, anchor)
+        menu.menu.add(0, 0, 0, getString(R.string.sort_name_asc))
+        menu.menu.add(0, 1, 1, getString(R.string.sort_name_desc))
+        menu.menu.add(0, 2, 2, getString(R.string.sort_date_desc))
+        menu.menu.add(0, 3, 3, getString(R.string.sort_date_asc))
+        menu.menu.add(0, 4, 4, getString(R.string.sort_size_desc))
+        menu.menu.add(0, 5, 5, getString(R.string.sort_size_asc))
+        menu.menu.add(0, 6, 6, getString(R.string.sort_duration_desc))
+        menu.menu.add(0, 7, 7, getString(R.string.sort_duration_asc))
+        menu.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                0 -> { sortField = SortField.NAME; sortAscending = true }
+                1 -> { sortField = SortField.NAME; sortAscending = false }
+                2 -> { sortField = SortField.DATE; sortAscending = false }
+                3 -> { sortField = SortField.DATE; sortAscending = true }
+                4 -> { sortField = SortField.SIZE; sortAscending = false }
+                5 -> { sortField = SortField.SIZE; sortAscending = true }
+                6 -> { sortField = SortField.DURATION; sortAscending = false }
+                7 -> { sortField = SortField.DURATION; sortAscending = true }
+            }
+            applyFilter()
+            true
+        }
+        menu.show()
+    }
 
     private fun resolve(uris: List<String>): List<Song> = uris.mapNotNull { songUriMap[it] }
 
