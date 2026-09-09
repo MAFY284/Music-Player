@@ -28,6 +28,19 @@ class PlaylistActivity : AppCompatActivity() {
 
     private lateinit var adapter: SongAdapter
 
+    private val playerListener = object : androidx.media3.common.Player.Listener {
+        override fun onMediaItemTransition(
+            mediaItem: androidx.media3.common.MediaItem?,
+            reason: Int,
+        ) {
+            adapter.setCurrentUri(PlayerManager.currentSongUri())
+        }
+
+        override fun onPlaybackStateChanged(playbackState: Int) {
+            adapter.setCurrentUri(PlayerManager.currentSongUri())
+        }
+    }
+
     private val pickCoverLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             if (uri != null) applyCoverFromUri(uri)
@@ -69,6 +82,17 @@ class PlaylistActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         render()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        PlayerManager.addListener(playerListener)
+        adapter.setCurrentUri(PlayerManager.currentSongUri())
+    }
+
+    override fun onStop() {
+        super.onStop()
+        PlayerManager.removeListener(playerListener)
     }
 
     private fun render() {

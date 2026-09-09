@@ -5,33 +5,26 @@
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
     android:gravity="center_vertical"
-    android:minHeight="64dp"
+    android:minHeight="60dp"
     android:orientation="horizontal"
-    android:paddingEnd="8dp"
-    android:paddingTop="6dp"
-    android:paddingBottom="6dp">
-
-    <View
-        android:id="@+id/accentBar"
-        android:layout_width="4dp"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent" />
+    android:paddingStart="16dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="12dp"
+    android:paddingBottom="8dp">
 
     <FrameLayout
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="12dp"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
         android:background="@drawable/thumb_bg">
 
         <ImageView
-            android:id="@+id/ivArt"
+            android:id="@+id/ivCover"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@null"
             android:scaleType="centerCrop" />
 
         <ImageView
-            android:id="@+id/ivArtPlaceholder"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
@@ -48,7 +41,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -58,41 +51,20 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvSubtitle"
+            android:id="@+id/tvCount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:ellipsize="end"
-            android:maxLines="1"
             android:textColor="@color/text_secondary"
             android:textSize="12sp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvDuration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textColor="@color/chrome_dark"
-        android:textSize="12sp" />
-
     <ImageView
-        android:id="@+id/ivAddPlaylist"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/add_to_playlist"
-        android:padding="8dp"
-        android:src="@drawable/ic_playlist_add"
-        app:tint="@color/chrome_dark" />
-
-    <ImageView
-        android:id="@+id/ivFav"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/section_favorites"
-        android:padding="8dp"
-        android:src="@drawable/ic_heart"
-        app:tint="@color/chrome_dark" />
+        android:padding="9dp"
+        android:src="@drawable/ic_add"
+        app:tint="@color/orange" />
 </LinearLayout>

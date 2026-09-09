@@ -16,6 +16,7 @@
     <color name="orange_deep">#E05E00</color>
     <color name="orange_dark_bg">#4A2A0E</color>
     <color name="orange_soft">#2E2116</color>
+    <color name="orange_light">#FFA45C</color>
 
     <!-- Cromado / aceros -->
     <color name="chrome">#C9D0D9</color>

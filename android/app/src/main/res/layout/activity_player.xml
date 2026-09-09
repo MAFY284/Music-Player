@@ -81,7 +81,7 @@
                     android:layout_gravity="center"
                     android:contentDescription="@null"
                     android:src="@drawable/ic_music"
-                    app:tint="@color/chrome_dark" />
+                    app:tint="@color/orange" />
 
                 <ImageView
                     android:id="@+id/ivCover"
@@ -194,16 +194,33 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
+                <FrameLayout
                     android:id="@+id/btnRewind"
                     android:layout_width="0dp"
                     android:layout_height="48dp"
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/rewind"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_fast_rewind"
-                    app:tint="@color/chrome" />
+                    android:contentDescription="@string/rewind">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_horizontal|top"
+                        android:layout_marginTop="2dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_fast_rewind"
+                        app:tint="@color/chrome" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:layout_marginBottom="2dp"
+                        android:text="10"
+                        android:textColor="@color/orange"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </FrameLayout>
 
                 <ImageView
                     android:id="@+id/btnPrev"
@@ -249,16 +266,33 @@
                     android:src="@drawable/ic_next"
                     app:tint="@color/chrome" />
 
-                <ImageView
+                <FrameLayout
                     android:id="@+id/btnForward"
                     android:layout_width="0dp"
                     android:layout_height="48dp"
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/forward"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_fast_forward"
-                    app:tint="@color/chrome" />
+                    android:contentDescription="@string/forward">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_horizontal|top"
+                        android:layout_marginTop="2dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_fast_forward"
+                        app:tint="@color/chrome" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:layout_marginBottom="2dp"
+                        android:text="10"
+                        android:textColor="@color/orange"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </FrameLayout>
             </LinearLayout>
 
             <LinearLayout

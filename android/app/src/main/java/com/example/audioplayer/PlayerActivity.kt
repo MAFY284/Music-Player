@@ -53,6 +53,10 @@ class PlayerActivity : AppCompatActivity() {
                     velocityX: Float,
                     velocityY: Float,
                 ): Boolean {
+                    if (velocityY > 2200 && abs(velocityY) > abs(velocityX)) {
+                        finishWithCollapse()
+                        return true
+                    }
                     if (abs(velocityX) < 2000 || abs(velocityX) < abs(velocityY)) return false
                     if (velocityX < 0) PlayerManager.next() else PlayerManager.previous()
                     return true

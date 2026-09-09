@@ -1,6 +1,7 @@
 package com.example.audioplayer
 
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,15 +18,22 @@ class SongAdapter(
 ) : RecyclerView.Adapter<SongAdapter.VH>() {
 
     private var songs: List<Song> = emptyList()
+    private var currentUri: String? = null
 
     fun submit(list: List<Song>) {
         songs = list
         notifyDataSetChanged()
     }
 
+    fun setCurrentUri(uri: String?) {
+        currentUri = uri
+        notifyDataSetChanged()
+    }
+
     fun songs(): List<Song> = songs
 
     class VH(view: View) : RecyclerView.ViewHolder(view) {
+        val accentBar: View = view.findViewById(R.id.accentBar)
         val art: ImageView = view.findViewById(R.id.ivArt)
         val title: TextView = view.findViewById(R.id.tvTitle)
         val subtitle: TextView = view.findViewById(R.id.tvSubtitle)
@@ -43,9 +51,19 @@ class SongAdapter(
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val song = songs[position]
+        val isCurrent = song.uri == currentUri
+
         holder.title.text = song.title
         holder.subtitle.text = song.artist.ifBlank { context.getString(R.string.unknown_artist) }
         holder.duration.text = if (song.durationMs > 0) formatDuration(song.durationMs) else ""
+
+        val titleColor = if (isCurrent) R.color.orange else R.color.text_primary
+        val subtitleColor = if (isCurrent) R.color.orange_light else R.color.text_secondary
+        holder.title.setTextColor(context.getColor(titleColor))
+        holder.subtitle.setTextColor(context.getColor(subtitleColor))
+        holder.accentBar.setBackgroundColor(
+            if (isCurrent) context.getColor(R.color.orange) else Color.TRANSPARENT,
+        )
 
         Artwork.loadAlbumArt(context, holder.art, song.albumId)
 

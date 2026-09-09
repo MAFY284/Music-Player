@@ -479,6 +479,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateMiniPlayer() {
+        songAdapter.setCurrentUri(PlayerManager.currentSongUri())
         val has = PlayerManager.hasMedia()
         binding.miniPlayer.visibility = if (has) View.VISIBLE else View.GONE
         if (!has) return
