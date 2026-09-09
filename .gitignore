@@ -1,0 +1,24 @@
+# Android / Gradle
+android/.gradle/
+android/.kotlin/
+android/build/
+android/app/build/
+android/.idea/
+android/captures/
+android/local.properties
+android/keystore.properties
+android/keystore/
+*.iml
+.idea/
+
+# APK (sube los builds como Releases, no al repositorio)
+*.apk
+
+# Sistema
+.DS_Store
+
+# Servidor Python (legacy, ya no se usa)
+server/.venv/
+server/__pycache__/
+server/tmp/
+server/cache/

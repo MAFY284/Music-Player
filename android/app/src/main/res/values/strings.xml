@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Reproductor de Audio</string>
+    <string name="app_subtitle">Tu música local, siempre a mano</string>
+
+    <!-- Navegación -->
+    <string name="section_songs">Mi música</string>
+    <string name="section_favorites">Favoritos</string>
+    <string name="section_playlists">Playlists</string>
+    <string name="section_recents">Recientes</string>
+    <string name="search_hint">Buscar canciones, listas y artistas</string>
+    <string name="download">Descargar audio</string>
+
+    <!-- Biblioteca -->
+    <string name="empty_songs">No se encontraron canciones en el dispositivo</string>
+    <string name="empty_favorites">Aún no tienes favoritos</string>
+    <string name="empty_playlists">Aún no tienes playlists</string>
+    <string name="empty_playlist">Esta playlist está vacía</string>
+    <string name="empty_recents">Aún no has reproducido nada</string>
+    <string name="empty_search">Sin resultados para tu búsqueda</string>
+    <string name="songs_count">%1$d canciones</string>
+    <string name="one_song">1 canción</string>
+    <string name="unknown_artist">Artista desconocido</string>
+
+    <!-- Permisos -->
+    <string name="perm_audio_title">Acceso a tu música</string>
+    <string name="perm_audio_desc">Necesitamos acceso a tus archivos de audio para mostrarlos y reproducirlos.</string>
+    <string name="perm_grant">Conceder acceso</string>
+
+    <!-- Playlists -->
+    <string name="new_playlist">Nueva playlist</string>
+    <string name="playlist_name">Nombre de la playlist</string>
+    <string name="playlist_name_hint">Mi playlist</string>
+    <string name="playlist_rename">Renombrar</string>
+    <string name="playlist_cover">Cambiar imagen</string>
+    <string name="playlist_delete">Eliminar playlist</string>
+    <string name="playlist_delete_confirm">¿Eliminar la playlist y quitar sus canciones?</string>
+    <string name="add_to_playlist">Añadir a playlist</string>
+    <string name="add_to_favorites">Añadir a favoritos</string>
+    <string name="remove_from_favorites">Quitar de favoritos</string>
+    <string name="added_to_playlist">Añadida a la playlist</string>
+    <string name="already_in_playlist">Ya está en esta playlist</string>
+    <string name="cover_set">Imagen actualizada</string>
+    <string name="play_all">Reproducir todo</string>
+
+    <!-- Reproductor -->
+    <string name="now_playing">Reproduciendo</string>
+    <string name="repeat_all">Repetir todo</string>
+    <string name="repeat_one">Repetir una</string>
+    <string name="repeat_off">Sin repetición</string>
+    <string name="shuffle_on">Aleatorio activado</string>
+    <string name="shuffle_off">Aleatorio desactivado</string>
+    <string name="no_track">Nada en reproducción</string>
+
+    <!-- Descarga -->
+    <string name="dl_title">Descargar audio</string>
+    <string name="dl_hint">https://www.youtube.com/watch?v=…</string>
+    <string name="dl_format">Formato</string>
+    <string name="dl_start">Descargar</string>
+    <string name="dl_analyzing">Analizando enlace…</string>
+    <string name="dl_downloading">Descargando…</string>
+    <string name="dl_complete">Completado</string>
+    <string name="dl_cancel">Cancelar</string>
+    <string name="dl_err_url">Pega un enlace válido</string>
+    <string name="dl_err_initializing">Inicializando el motor de descarga…</string>
+    <string name="dl_err_generic">La descarga falló</string>
+    <string name="dl_canceled">Descarga cancelada</string>
+    <string name="dl_location">Ubicación: %1$s</string>
+    <string name="dl_location_pick">Cambiar ubicación de descarga</string>
+    <string name="dl_location_default">Música</string>
+    <string name="folder_added">Carpeta añadida: %1$s</string>
+    <string name="add_folder">Añadir carpeta de música</string>
+
+    <!-- Común -->
+    <string name="cancel">Cancelar</string>
+    <string name="ok">Aceptar</string>
+    <string name="delete">Eliminar</string>
+</resources>

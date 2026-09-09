@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fondo: grises profundos -->
+    <color name="bg_top">#191D23</color>
+    <color name="bg_bottom">#232933</color>
+    <color name="bg_deep">#12161B</color>
+
+    <!-- Tarjetas / superficies: gris acero -->
+    <color name="card_gray">#2B313B</color>
+    <color name="card_gray_dark">#23282F</color>
+    <color name="strokes">#3A414D</color>
+    <color name="stroke_focus">#FF7A18</color>
+
+    <!-- Naranja -->
+    <color name="orange">#FF7A18</color>
+    <color name="orange_deep">#E05E00</color>
+    <color name="orange_dark_bg">#4A2A0E</color>
+    <color name="orange_soft">#2E2116</color>
+
+    <!-- Cromado / aceros -->
+    <color name="chrome">#C9D0D9</color>
+    <color name="chrome_dark">#8C96A3</color>
+    <color name="chrome_light">#E6EAEF</color>
+
+    <!-- Texto -->
+    <color name="text_primary">#EDEFF2</color>
+    <color name="text_secondary">#9AA3AE</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+</resources>
