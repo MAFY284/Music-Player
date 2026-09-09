@@ -144,7 +144,7 @@ class PlaylistActivity : AppCompatActivity() {
         val items = arrayOf(
             if (MusicStore.isFavorite(song.uri)) getString(R.string.remove_from_favorites)
             else getString(R.string.add_to_favorites),
-            getString(R.string.playlist_delete),
+            getString(R.string.remove_from_playlist),
         )
         MaterialAlertDialogBuilder(this, R.style.App_Dialog)
             .setTitle(song.title)

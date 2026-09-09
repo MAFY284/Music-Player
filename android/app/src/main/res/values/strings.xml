@@ -38,6 +38,7 @@
     <string name="add_to_playlist">Añadir a playlist</string>
     <string name="add_to_favorites">Añadir a favoritos</string>
     <string name="remove_from_favorites">Quitar de favoritos</string>
+    <string name="remove_from_playlist">Quitar de la playlist</string>
     <string name="added_to_playlist">Añadida a la playlist</string>
     <string name="already_in_playlist">Ya está en esta playlist</string>
     <string name="cover_set">Imagen actualizada</string>

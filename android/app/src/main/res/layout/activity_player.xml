@@ -72,7 +72,7 @@
                 android:layout_width="280dp"
                 android:layout_height="280dp"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/thumb_bg">
+                android:background="@drawable/bg_thumb_orange">
 
                 <ImageView
                     android:id="@+id/ivCoverPlaceholder"
@@ -81,7 +81,7 @@
                     android:layout_gravity="center"
                     android:contentDescription="@null"
                     android:src="@drawable/ic_music"
-                    app:tint="@color/orange" />
+                    app:tint="@color/chrome_dark" />
 
                 <ImageView
                     android:id="@+id/ivCover"

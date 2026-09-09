@@ -16,8 +16,9 @@ Reproductor de música para Android **centrado en archivos locales**, con descar
 - Play / pause, siguiente, anterior, **adelantar y retroceder 10 s**.
 - Barra de progreso con **tiempo transcurrido y restante**.
 - **Bucle** (repetir todo / una / ninguna) y **shuffle**.
+- **Adelantar / retroceder 10 s** (con el número "10" visible en los botones).
 - Botón de **letras** (añade o consulta la letra de cada canción) y acceso rápido a la **cola de reproducción**.
-- **Swipe** sobre la carátula para cambiar de canción; toca el mini-reproductor para expandir/colapsar la vista.
+- **Swipe** lateral sobre la carátula para cambiar de canción; **swipe hacia abajo** para cerrar; toca el mini-reproductor para expandir/colapsar la vista.
 - Notificación persistente con play/pause/next/prev y soporte de botones físicos de auriculares/Bluetooth (MediaSession).
 
 ### Biblioteca
@@ -26,6 +27,8 @@ Reproductor de música para Android **centrado en archivos locales**, con descar
 - **Buscador** de canciones, listas y artistas.
 - **Ordenar** por nombre, fecha, tamaño o duración (ascendente / descendente).
 - Icono de **carpeta** junto a "Mi música" para añadir carpetas del móvil como fuente de música.
+- **Añadir a playlist** desde cualquier canción (lista las creadas o crea una nueva) y **quitar canciones** de una playlist.
+- La canción **en reproducción se resalta** en naranja (barra lateral + título).
 
 ### Descarga
 - Icono de descarga (flechita) que abre un **diálogo** con: barra de enlace, selector de formato, botón de descarga y cancelar.
