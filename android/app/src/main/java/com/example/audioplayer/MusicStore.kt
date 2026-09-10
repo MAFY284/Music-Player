@@ -123,9 +123,9 @@ object MusicStore {
 
     fun reorderPlaylistSongs(playlistId: String, from: Int, to: Int) {
         val p = playlists.firstOrNull { it.id == playlistId } ?: return
-        if (from < 0 || from >= p.songUris.size || to < 0 || to > p.songUris.size) return
+        if (from < 0 || from >= p.songUris.size || to < 0 || to >= p.songUris.size) return
         val uri = p.songUris.removeAt(from)
-        p.songUris.add(if (to > from) to - 1 else to, uri)
+        p.songUris.add(to, uri)
         save()
     }
 

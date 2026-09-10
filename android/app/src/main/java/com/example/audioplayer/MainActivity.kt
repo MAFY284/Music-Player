@@ -52,6 +52,14 @@ class MainActivity : AppCompatActivity() {
     @Volatile
     private var ready = false
 
+    @Volatile
+    private var scanning = false
+
+    @Volatile
+    private var scanned = false
+
+    private var appliedRevision = -1
+
     private val permLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
             scan()
@@ -68,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 persistTree(uri)
                 val name = treeName(uri)
                 MusicStore.addSourceFolder(uri.toString(), name)
-                scan()
+                scan(force = true)
                 toast(getString(R.string.folder_added, name))
             }
         }
@@ -115,6 +123,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        SettingsStore.applyAccent(this)
+        appliedRevision = SettingsStore.accentRevision
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -129,10 +139,14 @@ class MainActivity : AppCompatActivity() {
         binding.btnDownload.setOnClickListener {
             downloadDialog = DownloadDialog(
                 this,
-                onDownloaded = { scan() },
+                onDownloaded = { scan(force = true) },
                 onPickLocation = { pickDownloadDirLauncher.launch(null) },
             )
             downloadDialog?.show()
+        }
+
+        binding.btnSettings.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
 
         binding.navFavorites.setOnClickListener { setSection(Section.FAVORITES) }
@@ -188,6 +202,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        if (appliedRevision != SettingsStore.accentRevision) {
+            recreate()
+            return
+        }
         scan()
     }
 
@@ -212,19 +230,32 @@ class MainActivity : AppCompatActivity() {
         permLauncher.launch(perms)
     }
 
-    private fun scan() {
+    private fun scan(force: Boolean = false) {
         if (!LocalMusic.hasAudioPermission(this)) {
             showPermissionState()
             return
         }
+        if (force) LocalMusic.invalidateScanCache()
+        if (scanned && !force) return
+        if (scanning) return
+        scanning = true
+        LocalMusic.peekCache(this)?.let { cachedSongs ->
+            mainHandler.post { applySongs(cachedSongs) }
+        }
         thread {
-            val songs = LocalMusic.scanAll(this)
+            val songs = LocalMusic.rescan(this)
             mainHandler.post {
-                allSongs = songs
-                songUriMap = songs.associateBy { it.uri }
-                applyFilter()
+                applySongs(songs)
+                scanning = false
+                scanned = true
             }
         }
+    }
+
+    private fun applySongs(songs: List<Song>) {
+        allSongs = songs
+        songUriMap = songs.associateBy { it.uri }
+        applyFilter()
     }
 
     private fun showPermissionState() {
@@ -272,7 +303,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setNavItem(icon: ImageView, label: TextView, selected: Boolean) {
-        val color = ContextCompat.getColor(this, if (selected) R.color.orange else R.color.chrome_dark)
+        val color = if (selected) SettingsStore.accent(this) else ContextCompat.getColor(this, R.color.chrome_dark)
         icon.imageTintList = android.content.res.ColorStateList.valueOf(color)
         label.setTextColor(color)
     }

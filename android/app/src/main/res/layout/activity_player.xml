@@ -159,8 +159,8 @@
                 android:layout_marginTop="22dp"
                 android:max="1000"
                 android:progressBackgroundTint="@color/strokes"
-                android:progressTint="@color/orange"
-                android:thumbTint="@color/orange" />
+                android:progressTint="?attr/accent"
+                android:thumbTint="?attr/accent" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -217,7 +217,7 @@
                         android:layout_gravity="center_horizontal|bottom"
                         android:layout_marginBottom="2dp"
                         android:text="10"
-                        android:textColor="@color/orange"
+                        android:textColor="?attr/accent"
                         android:textSize="11sp"
                         android:textStyle="bold" />
                 </FrameLayout>
@@ -289,7 +289,7 @@
                         android:layout_gravity="center_horizontal|bottom"
                         android:layout_marginBottom="2dp"
                         android:text="10"
-                        android:textColor="@color/orange"
+                        android:textColor="?attr/accent"
                         android:textSize="11sp"
                         android:textStyle="bold" />
                 </FrameLayout>

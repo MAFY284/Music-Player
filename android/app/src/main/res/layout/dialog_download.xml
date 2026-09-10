@@ -141,7 +141,7 @@
                 android:layout_marginTop="8dp"
                 android:max="100"
                 android:progressBackgroundTint="@color/strokes"
-                android:progressTint="@color/orange" />
+                android:progressTint="?attr/accent" />
         </LinearLayout>
 
         <ImageView
@@ -153,7 +153,7 @@
             android:contentDescription="@string/dl_cancel"
             android:padding="8dp"
             android:src="@drawable/ic_close"
-            app:tint="@color/orange" />
+            app:tint="?attr/accent" />
     </LinearLayout>
 
     <!-- Completado -->
@@ -171,7 +171,7 @@
             android:layout_height="56dp"
             android:contentDescription="@string/dl_complete"
             android:src="@drawable/ic_check"
-            app:tint="@color/orange" />
+            app:tint="?attr/accent" />
 
         <TextView
             android:id="@+id/tvDone"

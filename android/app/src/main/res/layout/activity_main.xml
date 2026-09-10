@@ -28,7 +28,7 @@
                 android:layout_gravity="center"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_music"
-                app:tint="@color/orange" />
+                app:tint="?attr/accent" />
         </FrameLayout>
 
         <LinearLayout
@@ -55,6 +55,16 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/btnSettings"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/settings"
+            android:padding="11dp"
+            android:src="@drawable/ic_settings"
+            app:tint="@color/chrome" />
+
+        <ImageView
             android:id="@+id/btnDownload"
             android:layout_width="46dp"
             android:layout_height="46dp"
@@ -62,7 +72,7 @@
             android:contentDescription="@string/download"
             android:padding="11dp"
             android:src="@drawable/ic_download"
-            app:tint="@color/orange" />
+            app:tint="?attr/accent" />
     </LinearLayout>
 
     <!-- Buscador -->
@@ -264,7 +274,7 @@
                 android:contentDescription="@string/now_playing"
                 android:padding="10dp"
                 android:src="@drawable/ic_play"
-                app:tint="@color/orange" />
+                app:tint="?attr/accent" />
 
             <ImageView
                 android:id="@+id/miniNext"

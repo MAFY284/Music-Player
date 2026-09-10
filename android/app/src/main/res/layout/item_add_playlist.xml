@@ -30,7 +30,7 @@
             android:layout_gravity="center"
             android:contentDescription="@null"
             android:src="@drawable/ic_music"
-            app:tint="@color/orange" />
+            app:tint="?attr/accent" />
     </FrameLayout>
 
     <LinearLayout
@@ -66,5 +66,5 @@
         android:contentDescription="@string/add_to_playlist"
         android:padding="9dp"
         android:src="@drawable/ic_add"
-        app:tint="@color/orange" />
+        app:tint="?attr/accent" />
 </LinearLayout>

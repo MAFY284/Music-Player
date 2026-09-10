@@ -57,6 +57,7 @@ class PlaylistActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        SettingsStore.applyAccent(this)
         binding = ActivityPlaylistBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -96,6 +97,7 @@ class PlaylistActivity : AppCompatActivity() {
                 val to = target.bindingAdapterPosition
                 if (from < 0 || to < 0 || from == to) return false
                 adapter.move(from, to)
+                songs = adapter.songs()
                 playlist?.let { MusicStore.reorderPlaylistSongs(it.id, from, to) }
                 return true
             }

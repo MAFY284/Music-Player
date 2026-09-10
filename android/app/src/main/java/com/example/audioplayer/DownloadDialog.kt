@@ -86,11 +86,11 @@ class DownloadDialog(
 
     private fun styleButton(b: MaterialButton, selected: Boolean) {
         b.backgroundTintList = ColorStateList.valueOf(
-            context.getColor(if (selected) R.color.orange else R.color.card_gray_dark),
+            if (selected) SettingsStore.accent(context) else context.getColor(R.color.card_gray_dark),
         )
         b.setTextColor(context.getColor(if (selected) R.color.white else R.color.chrome))
         b.strokeColor = ColorStateList.valueOf(
-            context.getColor(if (selected) R.color.orange else R.color.strokes),
+            if (selected) SettingsStore.accent(context) else context.getColor(R.color.strokes),
         )
         b.strokeWidth = dp(1)
     }

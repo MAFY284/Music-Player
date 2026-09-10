@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="accent" format="color" />
+    <attr name="accentLight" format="color" />
+    <attr name="accentDeep" format="color" />
+</resources>

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.AudioPlayer" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="colorPrimary">@color/orange</item>
-        <item name="colorPrimaryVariant">@color/orange_deep</item>
+        <item name="accent">@color/orange</item>
+        <item name="accentLight">@color/orange_light</item>
+        <item name="accentDeep">@color/orange_deep</item>
+        <item name="colorPrimary">?attr/accent</item>
+        <item name="colorPrimaryVariant">?attr/accentDeep</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/chrome_dark</item>
         <item name="colorOnSecondary">@color/white</item>
-        <item name="android:colorAccent">@color/orange</item>
+        <item name="android:colorAccent">?attr/accent</item>
         <item name="android:statusBarColor">@color/bg_deep</item>
         <item name="android:navigationBarColor">@color/bg_deep</item>
         <item name="android:windowBackground">@drawable/bg_gradient</item>
@@ -14,7 +17,7 @@
         <item name="android:textColorHint">@color/text_secondary</item>
         <item name="android:textColorTertiary">@color/text_secondary</item>
         <item name="colorControlNormal">@color/chrome_dark</item>
-        <item name="colorControlActivated">@color/orange</item>
+        <item name="colorControlActivated">?attr/accent</item>
         <item name="colorControlHighlight">@color/orange_soft</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
@@ -57,7 +60,7 @@
 
     <!-- Diálogos oscuros -->
     <style name="App.Dialog" parent="ThemeOverlay.MaterialComponents.Dark">
-        <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimary">?attr/accent</item>
         <item name="colorSecondary">@color/chrome_dark</item>
         <item name="colorSurface">@color/card_gray</item>
         <item name="android:windowBackground">@color/card_gray</item>
@@ -66,5 +69,42 @@
         <item name="android:textColorSecondary">@color/text_secondary</item>
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:textColorHint">@color/text_secondary</item>
+    </style>
+
+    <!-- Acentos (aplicados como overlay según la preferencia) -->
+    <style name="ThemeOverlay.Accent.Blue" parent="">
+        <item name="accent">#2196F3</item>
+        <item name="accentLight">#64B5F6</item>
+        <item name="accentDeep">#1565C0</item>
+    </style>
+    <style name="ThemeOverlay.Accent.Green" parent="">
+        <item name="accent">#4CAF50</item>
+        <item name="accentLight">#81C784</item>
+        <item name="accentDeep">#388E3C</item>
+    </style>
+    <style name="ThemeOverlay.Accent.Red" parent="">
+        <item name="accent">#F44336</item>
+        <item name="accentLight">#E57373</item>
+        <item name="accentDeep">#C62828</item>
+    </style>
+    <style name="ThemeOverlay.Accent.Purple" parent="">
+        <item name="accent">#9C27B0</item>
+        <item name="accentLight">#BA68C8</item>
+        <item name="accentDeep">#6A1B9A</item>
+    </style>
+    <style name="ThemeOverlay.Accent.Pink" parent="">
+        <item name="accent">#E91E63</item>
+        <item name="accentLight">#F06292</item>
+        <item name="accentDeep">#AD1457</item>
+    </style>
+    <style name="ThemeOverlay.Accent.Cyan" parent="">
+        <item name="accent">#00BCD4</item>
+        <item name="accentLight">#4DD0E1</item>
+        <item name="accentDeep">#00838F</item>
+    </style>
+    <style name="ThemeOverlay.Accent.Yellow" parent="">
+        <item name="accent">#FFC107</item>
+        <item name="accentLight">#FFD54F</item>
+        <item name="accentDeep">#FF8F00</item>
     </style>
 </resources>

@@ -85,13 +85,13 @@ class SongAdapter(
         holder.duration.text = if (song.durationMs > 0) formatDuration(song.durationMs) else ""
 
         holder.title.setTextColor(
-            context.getColor(if (isCurrent) R.color.orange else R.color.text_primary),
+            if (isCurrent) SettingsStore.accent(context) else context.getColor(R.color.text_primary),
         )
         holder.subtitle.setTextColor(
-            context.getColor(if (isCurrent) R.color.orange_light else R.color.text_secondary),
+            if (isCurrent) SettingsStore.accentLight(context) else context.getColor(R.color.text_secondary),
         )
         holder.accentBar.setBackgroundColor(
-            if (isCurrent) context.getColor(R.color.orange) else Color.TRANSPARENT,
+            if (isCurrent) SettingsStore.accent(context) else Color.TRANSPARENT,
         )
 
         val showingPause = isCurrent && isPlaying
@@ -99,7 +99,7 @@ class SongAdapter(
             if (showingPause) R.drawable.ic_pause else R.drawable.ic_play,
         )
         holder.playState.imageTintList = ColorStateList.valueOf(
-            context.getColor(if (isCurrent) R.color.orange else R.color.white),
+            if (isCurrent) SettingsStore.accent(context) else context.getColor(R.color.white),
         )
 
         holder.drag.visibility = if (dragEnabled) View.VISIBLE else View.GONE
@@ -117,13 +117,19 @@ class SongAdapter(
         val isFav = MusicStore.isFavorite(song.uri)
         holder.fav.setImageResource(if (isFav) R.drawable.ic_heart_filled else R.drawable.ic_heart)
         holder.fav.imageTintList = ColorStateList.valueOf(
-            context.getColor(if (isFav) R.color.orange else R.color.chrome_dark),
+            if (isFav) SettingsStore.accent(context) else context.getColor(R.color.chrome_dark),
         )
 
-        holder.artFrame.setOnClickListener { onTogglePlay(song, position) }
+        holder.artFrame.setOnClickListener {
+            val pos = holder.bindingAdapterPosition
+            if (pos != RecyclerView.NO_POSITION) onTogglePlay(song, pos)
+        }
         holder.fav.setOnClickListener { onFavorite(song) }
         holder.addPlaylist.setOnClickListener { onAddToPlaylist(song) }
-        holder.itemView.setOnClickListener { onOpenPlayer(song, position) }
+        holder.itemView.setOnClickListener {
+            val pos = holder.bindingAdapterPosition
+            if (pos != RecyclerView.NO_POSITION) onOpenPlayer(song, pos)
+        }
         holder.itemView.setOnLongClickListener {
             onLongClick(song)
             true

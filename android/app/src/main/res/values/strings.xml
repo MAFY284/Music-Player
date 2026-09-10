@@ -100,4 +100,18 @@
     <string name="cancel">Cancelar</string>
     <string name="ok">Aceptar</string>
     <string name="delete">Eliminar</string>
+
+    <!-- Ajustes -->
+    <string name="settings">Ajustes</string>
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_appearance">Apariencia</string>
+    <string name="settings_audio">Audio</string>
+    <string name="settings_accent">Color de acento</string>
+    <string name="settings_accent_desc">Cambia el color principal de la interfaz</string>
+    <string name="settings_equalizer">Ecualizador</string>
+    <string name="settings_equalizer_desc">Ajusta bandas y presets de audio</string>
+    <string name="eq_enable">Habilitar ecualizador</string>
+    <string name="eq_preset">Preset</string>
+    <string name="eq_custom">Personalizado</string>
+    <string name="eq_reset">Restablecer</string>
 </resources>

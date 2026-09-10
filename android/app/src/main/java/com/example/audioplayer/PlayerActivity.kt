@@ -41,6 +41,7 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        SettingsStore.applyAccent(this)
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -144,11 +145,11 @@ class PlayerActivity : AppCompatActivity() {
         when (mode) {
             Player.REPEAT_MODE_ONE -> {
                 binding.btnRepeat.setImageResource(R.drawable.ic_repeat_one)
-                binding.btnRepeat.imageTintList = ColorStateList.valueOf(getColor(R.color.orange))
+                binding.btnRepeat.imageTintList = ColorStateList.valueOf(SettingsStore.accent(this))
             }
             Player.REPEAT_MODE_ALL -> {
                 binding.btnRepeat.setImageResource(R.drawable.ic_repeat)
-                binding.btnRepeat.imageTintList = ColorStateList.valueOf(getColor(R.color.orange))
+                binding.btnRepeat.imageTintList = ColorStateList.valueOf(SettingsStore.accent(this))
             }
             else -> {
                 binding.btnRepeat.setImageResource(R.drawable.ic_repeat)
@@ -160,7 +161,7 @@ class PlayerActivity : AppCompatActivity() {
     private fun updateShuffleIcon() {
         val on = PlayerManager.controller()?.shuffleModeEnabled == true
         binding.btnShuffle.imageTintList =
-            ColorStateList.valueOf(getColor(if (on) R.color.orange else R.color.chrome))
+            ColorStateList.valueOf(if (on) SettingsStore.accent(this) else getColor(R.color.chrome))
     }
 
     private fun updateFavoriteIcon() {
@@ -168,7 +169,7 @@ class PlayerActivity : AppCompatActivity() {
         val fav = uri != null && MusicStore.isFavorite(uri)
         binding.btnFavorite.setImageResource(if (fav) R.drawable.ic_heart_filled else R.drawable.ic_heart)
         binding.btnFavorite.imageTintList =
-            ColorStateList.valueOf(getColor(if (fav) R.color.orange else R.color.chrome))
+            ColorStateList.valueOf(if (fav) SettingsStore.accent(this) else getColor(R.color.chrome))
     }
 
     private fun toggleFavorite() {

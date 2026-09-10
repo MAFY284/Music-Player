@@ -8,8 +8,20 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import androidx.documentfile.provider.DocumentFile
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.File
 
 object LocalMusic {
+
+    private const val CACHE_FILE = "music_cache.json"
+
+    @Volatile
+    private var cached: List<Song>? = null
+
+    fun invalidateScanCache() {
+        cached = null
+    }
 
     fun albumArtUri(albumId: Long): Uri =
         ContentUris.withAppendedId(
@@ -81,9 +93,73 @@ object LocalMusic {
     )
 
     fun scanAll(context: Context): List<Song> {
+        cached?.let { return it }
+        loadCache(context)?.let { cached = it; return it }
+        return rescan(context)
+    }
+
+    fun rescan(context: Context): List<Song> {
         val media = scan(context)
         val sources = scanSources(context, MusicStore.sourceFolders())
-        return (media + sources).distinctBy { it.uri }
+        val result = (media + sources).distinctBy { it.uri }
+        cached = result
+        saveCache(context, result)
+        return result
+    }
+
+    fun peekCache(context: Context): List<Song>? =
+        cached ?: loadCache(context)?.also { cached = it }
+
+    private fun cacheFile(context: Context): File = File(context.filesDir, CACHE_FILE)
+
+    private fun loadCache(context: Context): List<Song>? {
+        val file = cacheFile(context)
+        if (!file.exists()) return null
+        return try {
+            val arr = JSONArray(file.readText())
+            val songs = mutableListOf<Song>()
+            for (i in 0 until arr.length()) {
+                val o = arr.getJSONObject(i)
+                songs.add(
+                    Song(
+                        id = o.getString("id"),
+                        title = o.getString("title"),
+                        artist = o.optString("artist"),
+                        album = o.optString("album"),
+                        durationMs = o.optLong("duration"),
+                        uri = o.getString("uri"),
+                        albumId = o.optLong("albumId"),
+                        dateAddedSec = o.optLong("dateAdded"),
+                        sizeBytes = o.optLong("size"),
+                    ),
+                )
+            }
+            songs.ifEmpty { null }
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    private fun saveCache(context: Context, songs: List<Song>) {
+        try {
+            val arr = JSONArray()
+            songs.forEach { s ->
+                arr.put(
+                    JSONObject()
+                        .put("id", s.id)
+                        .put("title", s.title)
+                        .put("artist", s.artist)
+                        .put("album", s.album)
+                        .put("duration", s.durationMs)
+                        .put("uri", s.uri)
+                        .put("albumId", s.albumId)
+                        .put("dateAdded", s.dateAddedSec)
+                        .put("size", s.sizeBytes),
+                )
+            }
+            cacheFile(context).writeText(arr.toString())
+        } catch (_: Exception) {
+        }
     }
 
     fun scanSources(context: Context, folders: List<SourceFolder>): List<Song> {

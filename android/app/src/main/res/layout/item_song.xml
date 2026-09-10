@@ -25,13 +25,6 @@
         android:background="@drawable/bg_thumb_orange">
 
         <ImageView
-            android:id="@+id/ivArt"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@null"
-            android:scaleType="centerCrop" />
-
-        <ImageView
             android:id="@+id/ivArtPlaceholder"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -39,6 +32,16 @@
             android:contentDescription="@null"
             android:src="@drawable/ic_music"
             app:tint="@color/chrome_dark" />
+
+        <ImageView
+            android:id="@+id/ivArt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:background="@drawable/bg_thumb_clip"
+            android:clipToOutline="true"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop" />
 
         <ImageView
             android:id="@+id/ivPlayState"
