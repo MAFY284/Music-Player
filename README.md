@@ -8,6 +8,10 @@ Reproductor de música para Android **centrado en archivos locales**, con descar
 
 > ⚠️ Descarga solo contenido que tengas permiso de descargar y respeta los términos de servicio de cada sitio.
 
+## ⬇️ Descargar APK
+
+[**ReproductorAudio-v1.0.apk**](https://github.com/MAFY284/Music-Player/releases/latest) — APK firmado listo para instalar (Android 10+).
+
 ---
 
 ## ✨ Características
